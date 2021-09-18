@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from 'react';
 const TextEditor: React.FC<any> = () => {
   const ref = useRef<HTMLDivElement | null>(null);
   const [editing, setEditing] = useState(false);
+  const [input, setInput] = useState<string | undefined>('');
 
   useEffect(() => {
     const listener = (event: MouseEvent) => {
@@ -14,7 +15,7 @@ const TextEditor: React.FC<any> = () => {
       ) {
         return;
       }
-      console.log('eelement clicked on is outside editor');
+
       setEditing(false);
     };
     document.addEventListener('click', listener, { capture: true });
@@ -26,7 +27,10 @@ const TextEditor: React.FC<any> = () => {
   if (editing) {
     return (
       <div ref={ref}>
-        <MDEditor></MDEditor>
+        <MDEditor
+          value={input}
+          onChange={(text: string | undefined) => setInput(text)}
+        />
       </div>
     );
   } else {
